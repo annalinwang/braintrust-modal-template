@@ -1,8 +1,8 @@
-# Braintrust Modal Template
+# Remote Evals in Braintrust with Modal
 
 A ready-to-use template for deploying Braintrust evaluations to Modal. This template demonstrates how to set up a remote evaluation server that can be accessed from the Braintrust Playground.
 
-## Quick Start
+## Quick start
 
 ```bash
 # Clone the repository
@@ -26,16 +26,16 @@ modal token new
 modal serve src/eval_server.py
 ```
 
-## What This Template Includes
+## What this template includes
 
 - **`src/eval_server.py`**: Modal deployment configuration for Braintrust evaluations
 - **`evals/eval_example.py`**: A simple example evaluation file
 - **`pyproject.toml`**: Project dependencies and configuration
 - **`.env.example`**: Template for environment variables
 
-## Project Structure
+## Project structure
 
-```
+```text
 braintrust-modal-template/
 ├── evals/
 │   ├── __init__.py
@@ -48,7 +48,7 @@ braintrust-modal-template/
 └── README.md
 ```
 
-## Setup Instructions
+## Setup instructions
 
 ### 1. Prerequisites
 
@@ -57,7 +57,7 @@ braintrust-modal-template/
 - Modal account ([sign up here](https://modal.com))
 - Braintrust account ([sign up here](https://www.braintrust.dev))
 
-### 2. Install Dependencies
+### 2. Install dependencies
 
 Using `uv` (recommended):
 
@@ -72,7 +72,7 @@ Or using `pip`:
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
+### 3. Configure environment variables
 
 Copy the example environment file and add your API keys:
 
@@ -110,20 +110,28 @@ modal deploy src/eval_server.py
 
 After deployment, Modal will output a URL like:
 
-```
+```text
 https://your-username--braintrust-eval-server.modal.run
 ```
 
-## Using the Evaluation Server
+## Using the evaluation server
 
-### From Braintrust Playground
+### Step 1: Configure remote eval source
 
-1. Open the [Braintrust Playground](https://www.braintrust.dev/playground)
-2. Select "Remote Eval Server" as the execution method
-3. Enter your Modal deployment URL
-4. Your evaluations will appear with configurable parameters!
+1. Navigate to Project Configuration > Remote Evals
+2. Click the "+ Remote eval sources" button and paste your Modal deployment URL
 
-### From Command Line
+![Configure remote eval source](images/remote-evals-setup.png)
+
+### Step 2: Add remote eval to playground
+
+1. Open your playground
+2. Click the "+" button and choose your configured source from "Remote eval"
+3. Add a dataset and run
+
+![Remote eval in playground](images/remote-evals-playground-connect.png)
+
+### From command line
 
 You can also run evaluations locally:
 
@@ -131,7 +139,7 @@ You can also run evaluations locally:
 braintrust eval evals/eval_example.py
 ```
 
-## Creating Your Own Evaluations
+## Creating your own evaluations
 
 1. Create a new file in `evals/` following the pattern `eval_*.py`
 2. Define your evaluation using Braintrust's `Eval()` function
@@ -155,9 +163,11 @@ Eval(
 )
 ```
 
-## Customization
+See `evals/eval_example.py` for a complete example with parameter handling, including prompt parameters that render as full editors in the Playground.
 
-### Changing the App Name
+## Customizing Modal deployment
+
+### Changing the app name
 
 Edit `src/eval_server.py`:
 
@@ -165,7 +175,7 @@ Edit `src/eval_server.py`:
 app = modal.App("your-custom-name", image=modal_image)
 ```
 
-### Adding More Dependencies
+### Adding more dependencies
 
 Edit `pyproject.toml`:
 
@@ -183,7 +193,7 @@ Then run:
 uv sync --upgrade
 ```
 
-### Adding More Source Directories
+### Adding source directories
 
 Edit `src/eval_server.py`:
 
@@ -197,7 +207,7 @@ modal_image = (
 )
 ```
 
-### Configuring Container Settings
+### Configuring container settings
 
 Edit the function decorators in `src/eval_server.py`:
 
@@ -233,7 +243,7 @@ Edit the function decorators in `src/eval_server.py`:
 - Verify your `.env` file exists and has valid keys
 - Check Modal logs: `modal app logs braintrust-eval-server`
 
-## Learn More
+## Learn more
 
 - [Braintrust Remote Evals Docs](https://www.braintrust.dev/docs/guides/remote-evals)
 - [Modal Documentation](https://modal.com/docs)
